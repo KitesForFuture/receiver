@@ -1,23 +1,26 @@
 #include <dirent.h>
 #include <stdio.h>
-#include <pwm/motor.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-
-#include "i2c/i2c_device.h"
-#include "i2c/cat24c256.h"
-#include "i2c/bmp280.h"
-#include "i2c/mpu6050.h"
+#include "nvs_flash.h"
 #include "helpers/wifi.h"
-
-#include "control/rotation_matrix.h"
 
 extern "C" _Noreturn void app_main(void) {
 
-    init_wifi("schinken", "gnampf");
+    nvs_flash_init(); // Required for WiFi at least.
+
+    wifi_ap_config_t wifi_config {
+        "KiteReceiver",
+        "KiteReceiver",
+        .channel = 1,
+        .authmode = WIFI_AUTH_WPA_WPA2_PSK,
+        .ssid_hidden = 0,
+        .max_connection = 1,
+    };
+    init_wifi(wifi_config);
 
     while (1) {
         vTaskDelay(100);
-        printf("Running");
+        printf("Running\n");
     }
 }

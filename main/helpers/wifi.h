@@ -1,6 +1,8 @@
 #ifndef KITE_WIFI_H
 #define KITE_WIFI_H
 
-void init_wifi (const char *ssid, const char *pw);
+#include <esp_wifi.h>
+
+void init_wifi (wifi_ap_config_t config);
 
 #endif //KITE_WIFI_H
