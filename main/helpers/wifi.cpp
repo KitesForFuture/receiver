@@ -27,6 +27,7 @@ void init_wifi (wifi_ap_config_t config) {
                                                         nullptr,
                                                         nullptr));
 
+    // Man kann wohl auch ESPNOW mit Long Range kombinieren. Siehe espnow_example_main.c, L55
     esp_wifi_set_protocol(WIFI_IF_AP, WIFI_PROTOCOL_LR);
     wifi_config_t wifi_config = {
             .ap = config,
@@ -36,4 +37,8 @@ void init_wifi (wifi_ap_config_t config) {
     ESP_ERROR_CHECK(esp_wifi_start());
 
     printf("Ready to accept connections.\n");
+
+    uint8_t mac;
+    esp_efuse_mac_get_default(&mac);
+    printf("MAC: %i\n", mac);
 }
